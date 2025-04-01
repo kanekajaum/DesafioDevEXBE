@@ -82,6 +82,6 @@ namespace DesafioDev.API.Services
 
     public class PartidaResponse
     {
-        public List<PartidaInfo> Matches { get; set; } = new();
+        public List<Match> Matches { get; set; } = new();
     }
 }

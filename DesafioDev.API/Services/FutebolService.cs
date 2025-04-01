@@ -56,12 +56,6 @@ namespace DesafioDev.API.Services
             var jsonTimes = await responseTimes.Content.ReadAsStringAsync();
             var timeResponse = JsonSerializer.Deserialize<TimeResponse>(jsonTimes, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            var responsePartidas = await _httpClient.GetAsync("matches");
-            if (!responsePartidas.IsSuccessStatusCode) return new List<TimeInfo>();
-
-            var jsonPartidas = await responsePartidas.Content.ReadAsStringAsync();
-            var partidas = JsonSerializer.Deserialize<PartidaResponse>(jsonPartidas, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
             var times = new Dictionary<int, TimeInfo>();
 
             foreach (var time in timeResponse?.Teams ?? new List<Time>())
@@ -69,18 +63,32 @@ namespace DesafioDev.API.Services
                 times[time.Id] = new TimeInfo { Id = time.Id, Name = time.Name, Partidas = new List<PartidaInfo>() };
             }
 
-            if (partidas?.Matches != null)
+            foreach (var time in times.Values)
             {
-                foreach (var partida in partidas.Matches)
+                var responsePartidas = await _httpClient.GetAsync($"teams/{time.Id}/matches");
+                if (!responsePartidas.IsSuccessStatusCode) continue;
+
+                var jsonPartidas = await responsePartidas.Content.ReadAsStringAsync();
+                var partidas = JsonSerializer.Deserialize<PartidaResponse>(jsonPartidas, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (partidas?.Matches != null)
                 {
-                    var partidaInfo = new PartidaInfo
+                    foreach (var partida in partidas.Matches)
                     {
-                        Id = partida.Id,
-                        Data = partida.Data,
-                        Competicao = partida.Competicao,
-                        TimeCasa = partida.TimeCasa,
-                        TimeVisitante = partida.TimeVisitante
-                    };
+                        var partidaInfo = new PartidaInfo
+                        {
+                            Id = partida.Id,
+                            Data = partida.UtcDate,
+                            Competicao = partida.Competition.Name,
+                            TimeCasa = partida.HomeTeam.Name,
+                            TimeVisitante = partida.AwayTeam.Name,
+                        };
+
+                        if (partidaInfo.Data.Year.ToString() == DateTime.Now.ToString("yyyy"))
+                        {
+                            time.Partidas?.Add(partidaInfo);
+                        }
+                    }
                 }
             }
 

@@ -10,6 +10,6 @@
         public Area Area { get; set; }
         public SeasonInfo? CurrentSeason { get; set; }
         public List<EquipeInfo>? Teams { get; set; }
-        public List<PartidaInfo>? Matches { get; set; }
+        public List<Match>? Matches { get; set; }
     }
 }

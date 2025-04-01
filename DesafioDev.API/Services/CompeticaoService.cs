@@ -1,0 +1,76 @@
+﻿using DesafioDev.API.Models;
+using System.Text.Json;
+
+namespace DesafioDev.API.Services
+{
+
+    public class CompeticaoService
+    {
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
+
+        public CompeticaoService(HttpClient httpClient, IConfiguration configuration)
+        {
+            _httpClient = httpClient;
+            _configuration = configuration;
+            _httpClient.BaseAddress = new Uri(_configuration["FootballApi:BaseUrl"]!);
+            _httpClient.DefaultRequestHeaders.Add("X-Auth-Token", _configuration["FootballApi:ApiKey"]);
+        }
+
+        public async Task<List<CompeticaoInfo>?> ObterCompeticoesComEquipesEPartidasAsync()
+        {
+            var response = await _httpClient.GetAsync("competitions");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var competicaoResponse = JsonSerializer.Deserialize<CompeticaoResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (competicaoResponse == null || competicaoResponse.Competitions == null)
+            {
+                return null;
+            }
+
+            // Para cada competição, buscar as equipes e partidas agendadas
+            foreach (var competicao in competicaoResponse.Competitions)
+            {
+                // Buscar equipes
+                var equipesResponse = await _httpClient.GetAsync($"competitions/{competicao.Id}/teams");
+
+                if (equipesResponse.IsSuccessStatusCode)
+                {
+                    var equipesJson = await equipesResponse.Content.ReadAsStringAsync();
+                    var equipesData = JsonSerializer.Deserialize<EquipeResponse>(equipesJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    competicao.Teams = equipesData?.Teams;
+                }
+
+                // Buscar partidas agendadas
+                var partidasResponse = await _httpClient.GetAsync($"competitions/{competicao.Id}/matches");
+
+                if (partidasResponse.IsSuccessStatusCode)
+                {
+                    var partidasJson = await partidasResponse.Content.ReadAsStringAsync();
+                    var partidasData = JsonSerializer.Deserialize<PartidaResponse>(partidasJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    competicao.Matches = partidasData?.Matches;
+                }
+            }
+
+            return competicaoResponse.Competitions;
+        }
+    }
+
+    public class EquipeResponse
+    {
+        public List<EquipeInfo> Teams { get; set; } = new();
+    }
+
+    public class PartidaResponse
+    {
+        public List<PartidaInfo> Matches { get; set; } = new();
+    }
+}

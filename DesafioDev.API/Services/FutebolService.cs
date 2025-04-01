@@ -33,6 +33,21 @@ namespace DesafioDev.API.Services
             return timeResponse?.Teams;
         }
 
+        public async Task<List<Time>?> ObterTimesPorArea(int area)
+        {
+            var response = await _httpClient.GetAsync("teams");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var timeResponse = JsonSerializer.Deserialize<TimeResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return timeResponse?.Teams;
+        }
+
         public async Task<List<TimeInfo>> ObterTimesComListaJogosAsync()
         {
             var responseTimes = await _httpClient.GetAsync("teams");

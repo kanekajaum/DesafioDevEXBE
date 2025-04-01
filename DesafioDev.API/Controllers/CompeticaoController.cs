@@ -1,4 +1,5 @@
-﻿using DesafioDev.API.Services;
+﻿using DesafioDev.API.Models;
+using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioDev.API.Controllers
@@ -22,6 +23,19 @@ namespace DesafioDev.API.Controllers
             if (competicoes == null)
             {
                 return NotFound();
+            }
+
+            return Ok(competicoes);
+        }
+
+        [HttpPost("/porArea/{areaId}")]
+        public async Task<ActionResult<List<CompeticaoInfo>>> ObterCompeticõesPorArea(int areaId)
+        {
+            var competicoes = await _competicaoService.ObterCompeticõesPorAreaAsync(areaId);
+
+            if (competicoes == null || !competicoes.Any())
+            {
+                return NotFound("Nenhuma competição encontrada para esta área.");
             }
 
             return Ok(competicoes);

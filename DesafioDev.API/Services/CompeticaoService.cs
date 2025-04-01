@@ -34,10 +34,8 @@ namespace DesafioDev.API.Services
                 return null;
             }
 
-            // Para cada competição, buscar as equipes e partidas agendadas
             foreach (var competicao in competicaoResponse.Competitions)
             {
-                // Buscar equipes
                 var equipesResponse = await _httpClient.GetAsync($"competitions/{competicao.Id}/teams");
 
                 if (equipesResponse.IsSuccessStatusCode)
@@ -48,7 +46,6 @@ namespace DesafioDev.API.Services
                     competicao.Teams = equipesData?.Teams;
                 }
 
-                // Buscar partidas agendadas
                 var partidasResponse = await _httpClient.GetAsync($"competitions/{competicao.Id}/matches");
 
                 if (partidasResponse.IsSuccessStatusCode)
@@ -61,6 +58,20 @@ namespace DesafioDev.API.Services
             }
 
             return competicaoResponse.Competitions;
+        }
+
+        public async Task<List<CompeticaoInfo>> ObterCompeticõesPorAreaAsync(int areaId)
+        {
+            var url = $"competitions?areas={areaId}";
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                return new List<CompeticaoInfo>();
+
+            var json = await response.Content.ReadAsStringAsync();
+            var competicoesResponse = JsonSerializer.Deserialize<CompeticaoResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return competicoesResponse?.Competitions ?? new List<CompeticaoInfo>();
         }
     }
 

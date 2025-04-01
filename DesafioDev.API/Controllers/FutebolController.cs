@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioDev.API.Controllers
 {
+    [Route("api/[controller]")]
     public class FutebolController : ControllerBase
     {
         private readonly FutebolService _futebolService;
@@ -12,7 +13,7 @@ namespace DesafioDev.API.Controllers
             _futebolService = futebolService;
         }
 
-        [HttpGet("api/Times")]
+        [HttpGet("/Times")]
         public async Task<IActionResult> ObterTimes()
         {
             var times = await _futebolService.ObterTimesComListaJogosAsync();
@@ -23,7 +24,7 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
-        [HttpGet("api/Areas")]
+        [HttpGet("/Areas")]
         public async Task<IActionResult> ObterAreas()
         {
             var areas = await _futebolService.ObterAreasAsync();

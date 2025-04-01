@@ -73,6 +73,22 @@ namespace DesafioDev.API.Services
 
             return competicoesResponse?.Competitions ?? new List<CompeticaoInfo>();
         }
+
+        public async Task<List<Match>> ObterJogosDeHojeAsync()
+        {
+            var hoje = DateTime.Now;
+            var url = $"matches";
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Erro ao buscar jogos: {response.ReasonPhrase}");
+
+            var json = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<MatchResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            var resolutadoFiltrado = data?.Matches.Find(x => x.UtcDate.Date == hoje.Date);
+            return data?.Matches ?? new List<Match>();
+        }
     }
 
     public class EquipeResponse

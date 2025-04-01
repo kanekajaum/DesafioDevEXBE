@@ -13,6 +13,11 @@
         public Competition Competition { get; set; }
     }
 
+    public class MatchResponse
+    {
+        public List<Match> Matches { get; set; }
+    }
+
     public class Team
     {
         public int Id { get; set; }

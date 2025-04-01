@@ -16,6 +16,7 @@ namespace DesafioDev.API.Controllers
         }
 
         [HttpGet]
+        [Route("/ObterCompeticoes")]
         public async Task<IActionResult> ObterCompeticoesComEquipesEPartidas()
         {
             var competicoes = await _competicaoService.ObterCompeticoesComEquipesEPartidasAsync();
@@ -28,7 +29,8 @@ namespace DesafioDev.API.Controllers
             return Ok(competicoes);
         }
 
-        [HttpPost("/porArea/{areaId}")]
+        [HttpPost]
+        [Route("/PorArea/{areaId}")]
         public async Task<ActionResult<List<CompeticaoInfo>>> ObterCompeticõesPorArea(int areaId)
         {
             var competicoes = await _competicaoService.ObterCompeticõesPorAreaAsync(areaId);
@@ -40,5 +42,21 @@ namespace DesafioDev.API.Controllers
 
             return Ok(competicoes);
         }
+
+        [HttpGet]
+        [Route("/ObterJogosDeHoje")]
+        public async Task<IActionResult> ObterJogosDeHoje()
+        {
+            try
+            {
+                var jogos = await _competicaoService.ObterJogosDeHojeAsync();
+                return Ok(jogos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar jogos: {ex.Message}");
+            }
+        }
+
     }
 }

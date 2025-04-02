@@ -1,5 +1,6 @@
 ﻿using DesafioDev.API.Models;
 using DesafioDev.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioDev.API.Controllers
@@ -15,6 +16,7 @@ namespace DesafioDev.API.Controllers
             _competicaoService = competicaoService;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("/ObterCompeticoes")]
         public async Task<IActionResult> ObterCompeticoesComEquipesEPartidas()
@@ -29,6 +31,7 @@ namespace DesafioDev.API.Controllers
             return Ok(competicoes);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("/PorArea/{areaId}")]
         public async Task<ActionResult<List<CompeticaoInfo>>> ObterCompeticõesPorArea(int areaId)
@@ -43,6 +46,7 @@ namespace DesafioDev.API.Controllers
             return Ok(competicoes);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("/ObterJogosDeHoje")]
         public async Task<IActionResult> ObterJogosDeHoje()
@@ -57,6 +61,5 @@ namespace DesafioDev.API.Controllers
                 return StatusCode(500, $"Erro ao buscar jogos: {ex.Message}");
             }
         }
-
     }
 }

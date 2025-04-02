@@ -1,4 +1,5 @@
 ﻿using DesafioDev.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioDev.API.Controllers
@@ -13,6 +14,7 @@ namespace DesafioDev.API.Controllers
             _futebolService = futebolService;
         }
 
+        [Authorize]
         [HttpGet("/Times")]
         public async Task<IActionResult> ObterTimes()
         {
@@ -23,6 +25,8 @@ namespace DesafioDev.API.Controllers
             }
             return Ok(times);
         }
+
+        [Authorize]
         [HttpPost("/Times/Id")]
         public async Task<IActionResult> ObterTimesPorId(int id)
         {
@@ -34,6 +38,7 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        [Authorize]
         [HttpGet("/TimesDecompeticoes/{competicaoId}/")]
         public async Task<IActionResult> ObterTimesPorCompeticao(int competicaoId)
         {
@@ -47,6 +52,7 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        [Authorize]
         [HttpGet("/Areas")]
         public async Task<IActionResult> ObterAreas()
         {

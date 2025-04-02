@@ -1,7 +1,11 @@
-﻿using DesafioDev.API.Contexto;
+﻿using Azure.Core;
+using DesafioDev.API.Contexto;
 using DesafioDev.API.Models;
 using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DesafioDev.API.Controllers
 {
@@ -11,11 +15,13 @@ namespace DesafioDev.API.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UsuarioService _usuarioService;
+        private readonly TokenService _tokenService;
 
-        public UsuarioController(ApplicationDbContext context, UsuarioService usuarioService)
+        public UsuarioController(ApplicationDbContext context, UsuarioService usuarioService, TokenService tokenService)
         {
             _context = context;
             _usuarioService = usuarioService;
+            _tokenService = tokenService;
         }
 
         [HttpPost("cadastrar")]
@@ -45,6 +51,36 @@ namespace DesafioDev.API.Controllers
             }
 
             return Ok(usuarios);
+        }
+
+        [HttpPost("validarLogin")]
+        public async Task<IActionResult> ValidarLogin(string email, string senha)
+        {
+            var usuarioLogin = _context.Usuarios.SingleOrDefault(u => u.Email == email);
+
+            if (usuarioLogin == null)
+            {
+                return Unauthorized("Usuário não encontrado.");
+            }
+
+            string senhaTela = HashSenhaSHA256(senha);
+
+            if (senhaTela != usuarioLogin.SenhaHash)
+            {
+                return Unauthorized("Usuário ou senha inválidos.");
+            }
+
+            var token = _tokenService.GenerateToken(usuarioLogin.SenhaHash);
+            return Ok(new { Token = token });
+        }
+
+        public static string HashSenhaSHA256(string senha)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(senha));
+                return Convert.ToBase64String(bytes);
+            }
         }
     }
 }

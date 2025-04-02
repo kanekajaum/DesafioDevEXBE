@@ -1,5 +1,6 @@
 ﻿using DesafioDev.API.Contexto;
 using DesafioDev.API.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DesafioDev", "DesafioDev\DesafioDev.fsproj", "{BB67B73B-BC39-4962-AA65-98F9301791C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.API", "DesafioDev.API\DesafioDev.API.csproj", "{FECAC534-9830-4F4A-92CF-70E8DE1C74B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDev.API", "DesafioDev.API\DesafioDev.API.csproj", "{FECAC534-9830-4F4A-92CF-70E8DE1C74B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.Application", "DesafioDev.Application\DesafioDev.Application.csproj", "{149199F7-E67E-4D8A-8E00-88896891F923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDev.Application", "DesafioDev.Application\DesafioDev.Application.csproj", "{149199F7-E67E-4D8A-8E00-88896891F923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.Tests", "DesafioDev.Tests\DesafioDev.Tests.csproj", "{B07D13F1-3E6B-462D-AEA0-BF00B22AFA63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDev.Tests", "DesafioDev.Tests\DesafioDev.Tests.csproj", "{B07D13F1-3E6B-462D-AEA0-BF00B22AFA63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDev.MVC", "DesafioDev.MVC\DesafioDev.MVC.csproj", "{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB67B73B-BC39-4962-AA65-98F9301791C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB67B73B-BC39-4962-AA65-98F9301791C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB67B73B-BC39-4962-AA65-98F9301791C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB67B73B-BC39-4962-AA65-98F9301791C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FECAC534-9830-4F4A-92CF-70E8DE1C74B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FECAC534-9830-4F4A-92CF-70E8DE1C74B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FECAC534-9830-4F4A-92CF-70E8DE1C74B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{B07D13F1-3E6B-462D-AEA0-BF00B22AFA63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B07D13F1-3E6B-462D-AEA0-BF00B22AFA63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B07D13F1-3E6B-462D-AEA0-BF00B22AFA63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

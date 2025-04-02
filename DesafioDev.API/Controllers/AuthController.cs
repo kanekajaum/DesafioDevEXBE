@@ -33,7 +33,6 @@ public class AuthController : ControllerBase
             return Unauthorized("Usuário ou senha inválidos.");
         }
 
-        // Gerar o token JWT
         var token = _tokenService.GenerateToken(usuario.Email);
 
         return Ok(new { Token = token });

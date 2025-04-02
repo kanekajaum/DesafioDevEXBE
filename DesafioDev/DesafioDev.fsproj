@@ -5,13 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="controllers\HomeController.cs" />
     <Compile Include="Models/ErrorViewModel.fs" />
-    <Compile Include="Controllers/HomeController.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup />
 
 </Project>

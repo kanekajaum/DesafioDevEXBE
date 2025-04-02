@@ -43,7 +43,7 @@ namespace DesafioDev.API.Services
                     var equipesJson = await equipesResponse.Content.ReadAsStringAsync();
                     var equipesData = JsonSerializer.Deserialize<EquipeResponse>(equipesJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                    competicao.Teams = equipesData?.Teams;
+                    competicao.Teams = equipesData?.TeamsResponse;
                 }
 
                 var partidasResponse = await _httpClient.GetAsync($"competitions/{competicao.Id}/matches");
@@ -89,15 +89,5 @@ namespace DesafioDev.API.Services
             var resolutadoFiltrado = data?.Matches.Find(x => x.UtcDate.Date == hoje.Date);
             return data?.Matches ?? new List<Match>();
         }
-    }
-
-    public class EquipeResponse
-    {
-        public List<EquipeInfo> Teams { get; set; } = new();
-    }
-
-    public class PartidaResponse
-    {
-        public List<Match> Matches { get; set; } = new();
     }
 }

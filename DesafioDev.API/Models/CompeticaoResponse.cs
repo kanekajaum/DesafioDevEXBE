@@ -46,6 +46,8 @@
         public string? Name { get; set; }
         public string? ShortName { get; set; }
         public string? Tla { get; set; }
+        public string? Crest { get; set; }
+        public string? Website { get; set; }
         public List<PartidaInfo>? Partidas { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DesafioDev.API.Models;
 using Microsoft.Extensions.FileSystemGlobbing;
+using System.Diagnostics.Contracts;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -60,7 +61,7 @@ namespace DesafioDev.API.Services
 
             foreach (var time in timeResponse?.Teams ?? new List<Time>())
             {
-                times[time.Id] = new TimeInfo { Id = time.Id, Name = time.Name, Partidas = new List<PartidaInfo>() };
+                times[time.Id.Value] = new TimeInfo { Id = time.Id, Name = time.Name, Tla = time.Tla, Crest = time.Crest, Website = time.Website, Partidas = new List<PartidaInfo>() };
             }
 
             foreach (var time in times.Values)
@@ -95,6 +96,21 @@ namespace DesafioDev.API.Services
             return times.Values.ToList();
         }
 
+        public async Task<TimeDetalhado?> ObterTimesIDComListaJogosAsync(int timeId)
+        {
+            var response = await _httpClient.GetAsync($"teams/{timeId}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var timeResponse = JsonSerializer.Deserialize<TimeDetalhado>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return timeResponse;
+        }
+
         public async Task<List<AreaInfo>> ObterAreasAsync()
         {
             var response = await _httpClient.GetAsync("areas");
@@ -106,6 +122,21 @@ namespace DesafioDev.API.Services
             var areaResponse = JsonSerializer.Deserialize<AreaResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return areaResponse?.Areas ?? new List<AreaInfo>();
+        }
+
+        public async Task<List<Time>?> ObterTimesPorCompeticaoAsync(int competicaoId)
+        {
+            var response = await _httpClient.GetAsync($"competitions/{competicaoId}/teams");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var teamsResponse = JsonSerializer.Deserialize<EquipeResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return teamsResponse?.Teams;
         }
     }
 }

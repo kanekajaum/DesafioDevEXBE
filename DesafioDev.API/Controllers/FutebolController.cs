@@ -23,6 +23,29 @@ namespace DesafioDev.API.Controllers
             }
             return Ok(times);
         }
+        [HttpPost("/Times/Id")]
+        public async Task<IActionResult> ObterTimesPorId(int id)
+        {
+            var times = await _futebolService.ObterTimesIDComListaJogosAsync(id);
+            if (times == null)
+            {
+                return NotFound("Nenhum time encontrado.");
+            }
+            return Ok(times);
+        }
+
+        [HttpGet("/TimesDecompeticoes/{competicaoId}/")]
+        public async Task<IActionResult> ObterTimesPorCompeticao(int competicaoId)
+        {
+            var times = await _futebolService.ObterTimesPorCompeticaoAsync(competicaoId);
+
+            if (times == null || !times.Any())
+            {
+                return NotFound($"Nenhum time encontrado para a competição com ID {competicaoId}.");
+            }
+
+            return Ok(times);
+        }
 
         [HttpGet("/Areas")]
         public async Task<IActionResult> ObterAreas()

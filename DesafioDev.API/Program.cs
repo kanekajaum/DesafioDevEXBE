@@ -1,5 +1,7 @@
+using DesafioDev.API.Contexto;
 using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -36,6 +38,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddHttpClient<FutebolService>();
 builder.Services.AddHttpClient<CompeticaoService>();
+builder.Services.AddScoped<UsuarioService>();
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -45,12 +48,12 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Name = "Authorization",
+        Name = "Autorizado",
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Insira o token JWT no formato: Bearer {seu_token}"
+        Description = "Insira o token JWT no formato: {seu_token}"
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -68,6 +71,9 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

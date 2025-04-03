@@ -21,6 +21,7 @@
         public Competition? Competition { get; set; }
         public List<Time> Teams { get; set; } = new();
         public List<EquipeInfo> TeamsResponse { get; set; } = new();
+        public List<MatchPorTime>? Matches { get; set; }
     }
     public class TimeDetalhado
     {

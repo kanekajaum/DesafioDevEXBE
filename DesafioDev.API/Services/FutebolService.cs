@@ -138,5 +138,21 @@ namespace DesafioDev.API.Services
 
             return teamsResponse?.Teams;
         }
+        public async Task<EquipeResponse> TimesJogosRecentes(int timeId)
+        {
+            var url = $"teams/{timeId}/matches";
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Erro {response.StatusCode}: {response.ReasonPhrase}");
+                return null;
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+            var teamsResponse = JsonSerializer.Deserialize<EquipeResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return teamsResponse;
+        }
     }
 }

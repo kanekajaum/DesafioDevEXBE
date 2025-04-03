@@ -1,8 +1,85 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model HomeViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .card-jogo-hoje {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+</style>
+
+<h2 class="text-center my-4">Jogos do Campeonato Brasileiro</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var jogo in Model.JogosFinalizados)
+        {
+            <div class="col-md-4">
+                <div class="card text-center mb-4 shadow-sm">
+                    <div class="card-header">
+                        <strong>Rodada @jogo.Matchday</strong>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@jogo.HomeTeam.ShortName x @jogo.AwayTeam.ShortName</h5>
+                        <p class="card-text">
+                            <img src="@jogo.HomeTeam.Crest" alt="Escudo @jogo.HomeTeam.ShortName" class="img-fluid" style="max-height: 50px;">
+                            <strong>@(jogo.Score.FullTime.Home ?? 0) - @(jogo.Score.FullTime.Away ?? 0)</strong>
+                            <img src="@jogo.AwayTeam.Crest" alt="Escudo @jogo.AwayTeam.ShortName" class="img-fluid" style="max-height: 50px;">
+                        </p>
+                        <p><small>Data: @DateTime.Parse(jogo.UtcDate).ToString("dd/MM/yyyy HH:mm")</small></p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Status: @jogo.Status
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<h2>Jogos de Hoje</h2>
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+    @foreach (var jogo in Model.JogosDeHoje)
+    {
+        <div class="col d-flex">
+            <div class="card text-center card-jogo-hoje w-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="@jogo.HomeTeam.Crest" alt="@jogo.HomeTeam.Name" class="img-fluid" style="max-height: 40px;">
+                        <span class="mx-2">vs</span>
+                        <img src="@jogo.AwayTeam.Crest" alt="@jogo.AwayTeam.Name" class="img-fluid" style="max-height: 40px;">
+                    </div>
+                    <p class="mt-2 mb-0">@jogo.HomeTeam.ShortName vs @jogo.AwayTeam.ShortName</p>
+                    <small class="text-muted">@DateTime.Parse(jogo.UtcDate).ToLocalTime().ToString("dd/MM - HH:mm")</small>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<br />
+<h2>Champions League</h2>
+<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+    @foreach (var jogo in Model.JogosChampions)
+    {
+        <div class="col d-flex">
+            <div class="card text-center w-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="@jogo.HomeTeam.Crest" alt="@jogo.HomeTeam.Name" class="img-fluid" style="max-height: 40px;">
+                        <span class="mx-2">vs</span>
+                        <img src="@jogo.AwayTeam.Crest" alt="@jogo.AwayTeam.Name" class="img-fluid" style="max-height: 40px;">
+                    </div>
+                    <p class="mt-2 mb-0">@jogo.HomeTeam.ShortName vs @jogo.AwayTeam.ShortName</p>
+                    <small class="text-muted">@DateTime.Parse(jogo.UtcDate).ToLocalTime().ToString("dd/MM - HH:mm")</small>
+                    <p class="mb-0"><strong>Placar:</strong> @jogo.Score.FullTime.Home x @jogo.Score.FullTime.Away</p>
+                </div>
+            </div>
+        </div>
+    }
 </div>

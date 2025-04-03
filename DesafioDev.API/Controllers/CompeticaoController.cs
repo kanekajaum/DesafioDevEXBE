@@ -46,7 +46,6 @@ namespace DesafioDev.API.Controllers
             return Ok(competicoes);
         }
 
-        [Authorize]
         [HttpGet]
         [Route("/ObterJogosDeHoje")]
         public async Task<IActionResult> ObterJogosDeHoje()
@@ -62,7 +61,6 @@ namespace DesafioDev.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet]
         [Route("/ObterJogosChampionsLeague")]
         public async Task<IActionResult> ObterJogosChampionsLeague()
@@ -78,7 +76,6 @@ namespace DesafioDev.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet]
         [Route("/ObterJogosBrasileirao")]
         public async Task<IActionResult> ObterJogosBrasileirao()
@@ -94,7 +91,6 @@ namespace DesafioDev.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet]
         [Route("/ObterTopJogadoresBrasileirao")]
         public async Task<IActionResult> ObterTopJogadoresBrasileirao()

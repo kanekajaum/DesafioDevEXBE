@@ -22,7 +22,16 @@
                     <ul class="navbar-nav ms-auto">
                         @if (Context.Session.GetString("AuthToken") != null)
                         {
-                            <li class="nav-item">
+                            <li class="nav-item mx-3">
+                                <select id="timesSelect" class="form-select w-auto" onchange="redirecionarParaTime()">
+                                    <option value="">Selecione um time</option>
+                                    @foreach (var time in ViewBag.Times)
+                                    {
+                                        <option value="@time.Id">@time.ShortName</option>
+                                    }
+                                </select>
+                            </li>
+                            <li class="nav-item mx-3">
                                 <form asp-controller="Login" asp-action="Logout" method="post">
                                     <button type="submit" class="btn btn-danger">Sair</button>
                                 </form>
@@ -41,6 +50,28 @@
                 </div>
             </div>
         </nav>
+
+        <script>
+            document.getElementById("timesSelect").addEventListener("change", function () {
+                var timeId = this.value;
+
+                if (timeId && timeId !== "0") {
+                    var form = document.createElement("form");
+                    form.method = "POST";
+                    form.action = "/Home/Time";
+
+                    var input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "id";
+                    input.value = timeId;
+
+                    form.appendChild(input);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        </script>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -50,7 +81,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - DesafioDev.MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - DesafioDev.MVC
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -58,22 +89,4 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var logado = "@ViewData["Logado"]";
-        var registrado = "@ViewData["Registrado"]";
-        var erro = "@ViewData["ErrorMessage"]";
-
-        if (logado.trim() !== "") {
-            alert(logado);
-        }
-        if (registrado.trim() !== "") {
-            alert(registrado);
-        }
-        if (erro.trim() !== "") {
-            alert(erro);
-        }
-    });
-</script>
 </html>

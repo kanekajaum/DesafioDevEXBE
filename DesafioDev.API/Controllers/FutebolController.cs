@@ -14,11 +14,10 @@ namespace DesafioDev.API.Controllers
             _futebolService = futebolService;
         }
 
-        [Authorize]
         [HttpGet("/Times")]
         public async Task<IActionResult> ObterTimes()
         {
-            var times = await _futebolService.ObterTimesComListaJogosAsync();
+            var times = await _futebolService.ObterTimesAsync();
             if (times == null || !times.Any())
             {
                 return NotFound("Nenhum time encontrado.");
@@ -26,7 +25,6 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
-        [Authorize]
         [HttpPost("/Times/Id")]
         public async Task<IActionResult> ObterTimesPorId(int id)
         {
@@ -38,7 +36,6 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
-        [Authorize]
         [HttpGet("/TimesDecompeticoes/{competicaoId}/")]
         public async Task<IActionResult> ObterTimesPorCompeticao(int competicaoId)
         {
@@ -47,6 +44,20 @@ namespace DesafioDev.API.Controllers
             if (times == null || !times.Any())
             {
                 return NotFound($"Nenhum time encontrado para a competição com ID {competicaoId}.");
+            }
+
+            return Ok(times);
+        }
+
+        [HttpGet("/TimesJogosRecentes/{timeId}/")]
+        public async Task<IActionResult> TimesJogosRecentes(int timeId)
+        {
+            var times = await
+            _futebolService.TimesJogosRecentes(timeId);
+
+            if (times == null )
+            {
+                return NotFound($"Nenhum time encontrado.");
             }
 
             return Ok(times);

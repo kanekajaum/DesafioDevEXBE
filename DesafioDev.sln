@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.Application", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.Tests", "DesafioDev.Tests\DesafioDev.Tests.csproj", "{B07D13F1-3E6B-462D-AEA0-BF00B22AFA63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDev.MVC", "DesafioDev.MVC\DesafioDev.MVC.csproj", "{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.MVC", "DesafioDev.MVC\DesafioDev.MVC.csproj", "{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

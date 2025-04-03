@@ -3,6 +3,7 @@ using DesafioDev.MVC.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient<AuthService>();
+builder.Services.AddHttpClient<HomeService>();
 
 builder.Services.AddDistributedMemoryCache(); 
 builder.Services.AddSession(options =>

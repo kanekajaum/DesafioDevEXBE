@@ -1,4 +1,5 @@
 ﻿using DesafioDev.MVC.Models;
+using DesafioDev.MVC.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace DesafioDev.MVC.Controllers
 
             if (isValid != null)
             {
+                ViewData["Logado"] = "Usuario logado";
                 HttpContext.Session.SetString("AuthToken", isValid);
                 return RedirectToAction("Index", "Home");
             }
@@ -28,6 +30,23 @@ namespace DesafioDev.MVC.Controllers
             {
                 ViewData["ErrorMessage"] = "E-mail ou senha inválidos.";
                 return RedirectToAction("Login", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Registrar(LoginRequest request)
+        {
+            string usuario = await _authService.RegistrarUserAsync(request);
+
+            if (usuario != null)
+            {
+                ViewData["Registrado"] = "Usuario Cadastrado com sucesso";
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewData["ErrorMessage"] = "Erro ao efetuar o cadastro, tente novamente mais tarde.";
+                return RedirectToAction("Index", "Home");
             }
         }
 

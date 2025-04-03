@@ -1,4 +1,4 @@
-using DesafioDev.MVC.Models;
+using DesafioDev.MVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

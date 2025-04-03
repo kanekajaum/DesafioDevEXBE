@@ -58,4 +58,22 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var logado = "@ViewData["Logado"]";
+        var registrado = "@ViewData["Registrado"]";
+        var erro = "@ViewData["ErrorMessage"]";
+
+        if (logado.trim() !== "") {
+            alert(logado);
+        }
+        if (registrado.trim() !== "") {
+            alert(registrado);
+        }
+        if (erro.trim() !== "") {
+            alert(erro);
+        }
+    });
+</script>
 </html>

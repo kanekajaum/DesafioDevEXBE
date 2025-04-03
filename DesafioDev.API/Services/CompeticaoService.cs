@@ -1,5 +1,7 @@
 ﻿using DesafioDev.API.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using static DesafioDev.API.Models.TopJogadoresResponse;
 
 namespace DesafioDev.API.Services
 {
@@ -88,6 +90,52 @@ namespace DesafioDev.API.Services
 
             var resolutadoFiltrado = data?.Matches.Find(x => x.UtcDate.Date == hoje.Date);
             return data?.Matches ?? new List<Match>();
+        }
+
+        public async Task<List<Match>> ObterJogosChampionsLeague()
+        {
+            var hoje = DateTime.Now;
+            var url = $"competitions/CL/matches";
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Erro ao buscar jogos: {response.ReasonPhrase}");
+
+            var json = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<MatchResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            var resolutadoFiltrado = data?.Matches.Find(x => x.UtcDate.Date == hoje.Date);
+            return data?.Matches ?? new List<Match>();
+        }
+
+        public async Task<List<Match>> ObterJogosBrasileirao()
+        {
+            var hoje = DateTime.Now;
+            var url = $"competitions/BSA/matches";
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Erro ao buscar jogos: {response.ReasonPhrase}");
+
+            var json = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<MatchResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            var resolutadoFiltrado = data?.Matches.Find(x => x.UtcDate.Date == hoje.Date);
+            return data?.Matches ?? new List<Match>();
+        }
+
+        public async Task<List<Scorer>> ObterTopJogadoresBrasileirao()
+        {
+            var url = $"competitions/BSA/scorers";
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Erro ao buscar artilheiros: {response.ReasonPhrase}");
+
+            var json = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<TopScorersResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return data?.Scorers ?? new List<Scorer>();
         }
     }
 }

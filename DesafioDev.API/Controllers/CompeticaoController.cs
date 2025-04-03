@@ -61,5 +61,53 @@ namespace DesafioDev.API.Controllers
                 return StatusCode(500, $"Erro ao buscar jogos: {ex.Message}");
             }
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("/ObterJogosChampionsLeague")]
+        public async Task<IActionResult> ObterJogosChampionsLeague()
+        {
+            try
+            {
+                var jogos = await _competicaoService.ObterJogosChampionsLeague();
+                return Ok(jogos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar jogos: {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("/ObterJogosBrasileirao")]
+        public async Task<IActionResult> ObterJogosBrasileirao()
+        {
+            try
+            {
+                var jogos = await _competicaoService.ObterJogosBrasileirao();
+                return Ok(jogos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar jogos: {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("/ObterTopJogadoresBrasileirao")]
+        public async Task<IActionResult> ObterTopJogadoresBrasileirao()
+        {
+            try
+            {
+                var jogadores = await _competicaoService.ObterTopJogadoresBrasileirao();
+                return Ok(jogadores);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao buscar jogos: {ex.Message}");
+            }
+        }
     }
 }

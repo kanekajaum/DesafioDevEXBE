@@ -36,7 +36,6 @@
             );
 
             string url = $"{_apiBaseUrl}api/usuarios/validarLogin?email={request.Email}&senha={request.Password}";
-            Console.WriteLine($"Enviando requisição para: {url}");
 
             HttpResponseMessage response = await httpClient.PostAsync(url, jsonContent);
 

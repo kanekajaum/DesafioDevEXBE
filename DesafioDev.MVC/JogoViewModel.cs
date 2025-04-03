@@ -1,4 +1,6 @@
-﻿namespace DesafioDev.MVC
+﻿using DesafioDev.MVC.Models;
+
+namespace DesafioDev.MVC
 {
     public class JogoViewModel
     {
@@ -36,5 +38,6 @@
         public List<JogoViewModel> JogosFinalizados { get; set; }
         public List<JogoViewModel> JogosDeHoje { get; set; }
         public List<JogoViewModel> JogosChampions { get; set; }
+        public List<TopJogadorViewModel> TopJogadores { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace DesafioDev.MVC.Controllers
             {
                 ViewData["Logado"] = "Usuario logado";
                 HttpContext.Session.SetString("AuthToken", isValid);
+                HttpContext.Session.SetString("EmailToken", request.Email);
                 return RedirectToAction("Index", "Home");
             }
             else

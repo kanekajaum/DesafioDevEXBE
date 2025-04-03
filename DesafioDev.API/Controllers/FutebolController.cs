@@ -25,6 +25,7 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        [Authorize]
         [HttpPost("/Times/Id")]
         public async Task<IActionResult> ObterTimesPorId(int id)
         {
@@ -36,6 +37,7 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        [Authorize]
         [HttpGet("/TimesDecompeticoes/{competicaoId}/")]
         public async Task<IActionResult> ObterTimesPorCompeticao(int competicaoId)
         {
@@ -49,11 +51,11 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        [Authorize]
         [HttpGet("/TimesJogosRecentes/{timeId}/")]
         public async Task<IActionResult> TimesJogosRecentes(int timeId)
         {
-            var times = await
-            _futebolService.TimesJogosRecentes(timeId);
+            var times = await _futebolService.TimesJogosRecentes(timeId);
 
             if (times == null )
             {

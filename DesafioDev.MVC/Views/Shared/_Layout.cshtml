@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var usuario = ViewBag.Usuario;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,8 +36,13 @@
                                 </select>
                             </li>
                             <li class="nav-item mx-3">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+                                    Usuário
+                                </button>
+                            </li>
+                            <li class="nav-item mx-3">
                                 <form asp-controller="Login" asp-action="Logout" method="post">
-                                    <button type="submit" class="btn btn-danger">Sair</button>
+                                    <button type="submit" class="btn btn-danger">Sair <i>&#8594;</i></button>
                                 </form>
                             </li>
                         }
@@ -78,7 +87,26 @@
             @RenderBody()
         </main>
     </div>
-
+    @if (usuario != null)
+    {
+        <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Dados do Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nome:</strong> @usuario.Nome</p>
+                    <p><strong>Email:</strong> @usuario.Email</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - DesafioDev.MVC

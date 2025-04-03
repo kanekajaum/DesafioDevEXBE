@@ -3,6 +3,7 @@ using DesafioDev.MVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -24,24 +25,58 @@ namespace DesafioDev.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var jogosFinalizados = await _homeService.ObterJogosFinalizados();
+            var token = HttpContext.Session.GetString("AuthToken");
+            var email = HttpContext.Session.GetString("EmailToken");
+
+            var jogosFinalizados = await _homeService.ObterJogosFinalizados(token);
             var jogosDeHoje = await _homeService.ObterJogosDeHoje();
             var jogosChampions = await _homeService.ObterJogosChampionsLeague();
-            await CarregarselectTimes();
+            var topJogadores = await ObterTopJogadoresBrasileirao(token);
+            await CarregarSelectTimes();
 
             var viewModel = new HomeViewModel
             {
                 JogosFinalizados = jogosFinalizados,
                 JogosDeHoje = jogosDeHoje,
-                JogosChampions = jogosChampions
+                JogosChampions = jogosChampions,
+                TopJogadores = topJogadores
             };
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                var usuarioBanco =  await _homeService.ObterUsuario(email);
+                var usuario = new
+                {
+                    Nome = usuarioBanco.Nome,
+                    Email = usuarioBanco.Email
+                };
+
+                ViewBag.Usuario = usuario;
+            }
 
             return View(viewModel);
         }
 
-        private async Task CarregarselectTimes()
+        private async Task<List<TopJogadorViewModel>> ObterTopJogadoresBrasileirao(string token)
         {
-            var times = await _homeService.ObterTimes();
+            var url = $"{_apiBaseUrl}ObterTopJogadoresBrasileirao";
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+                return new List<TopJogadorViewModel>();
+
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<TopJogadorViewModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        private async Task CarregarSelectTimes()
+        {
+            var token = HttpContext.Session.GetString("AuthToken");
+            var times = await _homeService.ObterTimes(token);
             ViewBag.Times = times;
         }
 
@@ -67,8 +102,9 @@ namespace DesafioDev.MVC.Controllers
 
         public async Task<IActionResult> Time(int id)
         {
-            await CarregarselectTimes();
-            var time = await _homeService.BuscarTimeEPartidas(id);
+            await CarregarSelectTimes();
+            var token = HttpContext.Session.GetString("AuthToken");
+            var time = await _homeService.BuscarTimeEPartidas(id, token);
 
             return View(time);
         }

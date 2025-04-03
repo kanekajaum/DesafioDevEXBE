@@ -1,16 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
+}
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var isAuthenticated = !string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("AuthToken"));
 }
 @model HomeViewModel
-
 <style>
-    .card-jogo-hoje {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
+        .card-jogo-hoje img {
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+        }
+
+    .card-header {
+        background: #0069d9;
+        color: white;
+    }
+
+    .card-body {
+        background: #f8f9fa;
     }
 </style>
 
@@ -21,18 +30,38 @@
         @foreach (var jogo in Model.JogosFinalizados)
         {
             <div class="col-md-4">
-                <div class="card text-center mb-4 shadow-sm">
+                <div class="card text-center mb-4 shadow-sm border-success">
                     <div class="card-header">
                         <strong>Rodada @jogo.Matchday</strong>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">@jogo.HomeTeam.ShortName x @jogo.AwayTeam.ShortName</h5>
+                        <h5 class="card-title text-success">@jogo.HomeTeam.ShortName x @jogo.AwayTeam.ShortName</h5>
                         <p class="card-text">
-                            <img src="@jogo.HomeTeam.Crest" alt="Escudo @jogo.HomeTeam.ShortName" class="img-fluid" style="max-height: 50px;">
-                            <strong>@(jogo.Score.FullTime.Home ?? 0) - @(jogo.Score.FullTime.Away ?? 0)</strong>
-                            <img src="@jogo.AwayTeam.Crest" alt="Escudo @jogo.AwayTeam.ShortName" class="img-fluid" style="max-height: 50px;">
+                            @if (isAuthenticated)
+                            {
+                                <a asp-action="Time" asp-route-id="@jogo.HomeTeam.Id">
+                                    <img src="@jogo.HomeTeam.Crest" alt="Escudo @jogo.HomeTeam.ShortName" class="img-fluid" style="max-height: 50px;">
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="@jogo.HomeTeam.Crest" alt="Escudo @jogo.HomeTeam.ShortName" class="img-fluid" style="max-height: 50px;">
+                            }
+
+                            <strong class="text-danger">@(jogo.Score.FullTime.Home ?? 0) - @(jogo.Score.FullTime.Away ?? 0)</strong>
+
+                            @if (isAuthenticated)
+                            {
+                                <a asp-action="Time" asp-route-id="@jogo.AwayTeam.Id">
+                                    <img src="@jogo.AwayTeam.Crest" alt="Escudo @jogo.AwayTeam.ShortName" class="img-fluid" style="max-height: 50px;">
+                                </a>
+                            }
+                            else
+                            {
+                                <img src="@jogo.AwayTeam.Crest" alt="Escudo @jogo.AwayTeam.ShortName" class="img-fluid" style="max-height: 50px;">
+                            }
                         </p>
-                        <p><small>Data: @DateTime.Parse(jogo.UtcDate).ToString("dd/MM/yyyy HH:mm")</small></p>
+                        <p><small class="text-muted">Data: @DateTime.Parse(jogo.UtcDate).ToString("dd/MM/yyyy HH:mm")</small></p>
                     </div>
                     <div class="card-footer text-muted">
                         Status: @jogo.Status
@@ -43,43 +72,92 @@
     </div>
 </div>
 <br />
-<h2>Jogos de Hoje</h2>
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
-    @foreach (var jogo in Model.JogosDeHoje)
-    {
-        <div class="col d-flex">
-            <div class="card text-center card-jogo-hoje w-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img src="@jogo.HomeTeam.Crest" alt="@jogo.HomeTeam.Name" class="img-fluid" style="max-height: 40px;">
-                        <span class="mx-2">vs</span>
-                        <img src="@jogo.AwayTeam.Crest" alt="@jogo.AwayTeam.Name" class="img-fluid" style="max-height: 40px;">
+@if (isAuthenticated)
+{
+    <h2 class="text-primary">Jogos de Hoje</h2>
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+        @foreach (var jogo in Model.JogosDeHoje)
+        {
+            <div class="col d-flex">
+                <div class="card text-center w-100 border-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="@jogo.HomeTeam.Crest" alt="@jogo.HomeTeam.Name" class="img-fluid" style="max-height: 40px;">
+                            <span class="mx-2">vs</span>
+                            <img src="@jogo.AwayTeam.Crest" alt="@jogo.AwayTeam.Name" class="img-fluid" style="max-height: 40px;">
+                        </div>
+                        <p class="mt-2 mb-0">@jogo.HomeTeam.ShortName vs @jogo.AwayTeam.ShortName</p>
+                        <small class="text-muted">@DateTime.Parse(jogo.UtcDate).ToLocalTime().ToString("dd/MM - HH:mm")</small>
                     </div>
-                    <p class="mt-2 mb-0">@jogo.HomeTeam.ShortName vs @jogo.AwayTeam.ShortName</p>
-                    <small class="text-muted">@DateTime.Parse(jogo.UtcDate).ToLocalTime().ToString("dd/MM - HH:mm")</small>
                 </div>
+            </div>
+        }
+    </div>
+    <br />
+    <h2 class="text-warning">Champions League</h2>
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+        @foreach (var jogo in Model.JogosChampions)
+        {
+            <div class="col d-flex">
+                <div class="card text-center w-100 border-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="@jogo.HomeTeam.Crest" alt="@jogo.HomeTeam.Name" class="img-fluid" style="max-height: 40px;">
+                            <span class="mx-2">vs</span>
+                            <img src="@jogo.AwayTeam.Crest" alt="@jogo.AwayTeam.Name" class="img-fluid" style="max-height: 40px;">
+                        </div>
+                        <p class="mt-2 mb-0">@jogo.HomeTeam.ShortName vs @jogo.AwayTeam.ShortName</p>
+                        <small class="text-muted">@DateTime.Parse(jogo.UtcDate).ToLocalTime().ToString("dd/MM - HH:mm")</small>
+                        <p class="mb-0 text-danger"><strong>Placar:</strong> @jogo.Score.FullTime.Home x @jogo.Score.FullTime.Away</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    @if (Model.TopJogadores.Any())
+    {
+        <div class="container mt-5">
+            <h2 class="text-center text-uppercase fw-bold mb-4" style="color: #27ae60;">
+                ⚽ Top Jogadores do Brasileirão 🇧🇷
+            </h2>
+
+            <div class="row justify-content-center">
+                @foreach (var jogador in Model.TopJogadores.Select((j, index) => new { Jogador = j, Posicao = index + 1 }))
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card border-0 shadow-lg text-center" style="border-radius: 15px;">
+
+                            <!-- Número da Posição -->
+                            <div class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-dark fs-5 shadow" style="padding: 10px 15px;">
+                                #@jogador.Posicao
+                            </div>
+
+                            <div class="card-header bg-dark text-white" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                                <h5 class="fw-bold">@jogador.Jogador.Player.Name</h5>
+                                <small class="d-block">🎽 @jogador.Jogador.Team.ShortName</small>
+                            </div>
+
+                            <div class="card-body p-4" style="background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img src="@jogador.Jogador.Team.Crest" alt="Escudo @jogador.Jogador.Team.ShortName" class="img-fluid me-2" style="max-height: 60px;">
+                                </div>
+
+                                <div class="mt-3">
+                                    <p class="mb-1">
+                                        <i class="fas fa-futbol"></i> <strong>Gols:</strong> @jogador.Jogador.Goals
+                                    </p>
+                                    <p class="mb-1">
+                                        <i class="fas fa-running"></i> <strong>Partidas:</strong> @jogador.Jogador.PlayedMatches
+                                    </p>
+                                    <p class="mb-1">
+                                        <i class="fas fa-medal"></i> <strong>Posição:</strong> @jogador.Jogador.Player.Section
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     }
-</div>
-<br />
-<h2>Champions League</h2>
-<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
-    @foreach (var jogo in Model.JogosChampions)
-    {
-        <div class="col d-flex">
-            <div class="card text-center w-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img src="@jogo.HomeTeam.Crest" alt="@jogo.HomeTeam.Name" class="img-fluid" style="max-height: 40px;">
-                        <span class="mx-2">vs</span>
-                        <img src="@jogo.AwayTeam.Crest" alt="@jogo.AwayTeam.Name" class="img-fluid" style="max-height: 40px;">
-                    </div>
-                    <p class="mt-2 mb-0">@jogo.HomeTeam.ShortName vs @jogo.AwayTeam.ShortName</p>
-                    <small class="text-muted">@DateTime.Parse(jogo.UtcDate).ToLocalTime().ToString("dd/MM - HH:mm")</small>
-                    <p class="mb-0"><strong>Placar:</strong> @jogo.Score.FullTime.Home x @jogo.Score.FullTime.Away</p>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+}

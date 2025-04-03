@@ -4,6 +4,7 @@
     using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
 
@@ -18,14 +19,35 @@
             _apiBaseUrl = configuration["ApiBaseUrl"];
         }
 
-        public async Task<bool> ValidateUserAsync(LoginRequest request)
+        public async Task<string> ValidateUserAsync(LoginRequest request)
         {
-            var loginData = new { email = request.Email, senha = request.Password };
-            var jsonContent = new StringContent(JsonSerializer.Serialize(loginData), Encoding.UTF8, "application/json");
+            using var httpClient = new HttpClient();
 
-            HttpResponseMessage response = await _httpClient.PostAsync($"{_apiBaseUrl}api/usuarios/validarLogin", jsonContent);
+            var loginData = new
+            {
+                email = request.Email,
+                senha = request.Password
+            };
 
-            return response.IsSuccessStatusCode;
+            var jsonContent = new StringContent(
+                JsonSerializer.Serialize(loginData),
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            string url = $"{_apiBaseUrl}api/usuarios/validarLogin?email={request.Email}&senha={request.Password}";
+            Console.WriteLine($"Enviando requisição para: {url}");
+
+            HttpResponseMessage response = await httpClient.PostAsync(url, jsonContent);
+
+            var json = await response.Content.ReadAsStringAsync();
+            var autenticacaoToken = JsonSerializer.Deserialize<AutenticacaoToken>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return autenticacaoToken.token;
         }
+    }
+    public class AutenticacaoToken
+    {
+        public string? token { get; set; }
     }
 }

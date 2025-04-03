@@ -1,4 +1,5 @@
 ﻿using DesafioDev.MVC.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,17 +17,24 @@ namespace DesafioDev.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            bool isValid = await _authService.ValidateUserAsync(request);
+            string isValid = await _authService.ValidateUserAsync(request);
 
-            if (isValid)
+            if (isValid != null)
             {
+                HttpContext.Session.SetString("AuthToken", isValid);
                 return RedirectToAction("Index", "Home");
             }
             else
             {
                 ViewData["ErrorMessage"] = "E-mail ou senha inválidos.";
-                return View();
+                return RedirectToAction("Login", "Home");
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("AuthToken");
+            return RedirectToAction("Login", "Home");
         }
     }
 }

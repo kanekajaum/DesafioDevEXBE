@@ -1,6 +1,6 @@
 ﻿@model TimeViewModel
 
-<div class="container mt-4">
+<div class="container">
     <h2>@Model.Name</h2>
     <img src="@Model.Crest" alt="@Model.Name" class="img-fluid" width="150">
     <p><strong>Fundado em:</strong> @Model.Founded</p>
@@ -9,14 +9,6 @@
 
     <h3>Treinador</h3>
     <p>@Model.Coach?.Name</p>
-
-@*    <h3>Elenco</h3>
-    <ul class="list-group">
-        @foreach (var jogador in Model.Squad)
-        {
-            <li class="list-group-item">@jogador.Name - @jogador.Position</li>
-        }
-    </ul>*@
 
     <h3 class="mt-4">Jogos Recentes</h3>
     @if (Model.JogosRecentes != null && Model.JogosRecentes.Any())
@@ -34,7 +26,7 @@
                 @foreach (var match in Model.JogosRecentes)
                 {
                     <tr>
-                        <td>@match.UtcDate</td>
+                        <td>@match.UtcDate.ToLocalTime().ToString("dd/MM/yyyy")</td>
                         <td>@match.HomeTeam.ShortName</td>
                         <td>@match.AwayTeam.ShortName</td>
                         <td>@(match.Score.FullTime.Home ?? 0) - @(match.Score.FullTime.Away ?? 0)</td>
@@ -47,6 +39,4 @@
     {
         <p>Sem jogos recentes disponíveis.</p>
     }
-
-    <a onclick="window.history.back()" class="btn btn-primary mt-3">Voltar</a>
 </div>

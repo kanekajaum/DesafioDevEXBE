@@ -4,12 +4,11 @@
     using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using DesafioDev.MVC.Interfaces;
     using DesafioDev.MVC.Models;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
 
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiBaseUrl;

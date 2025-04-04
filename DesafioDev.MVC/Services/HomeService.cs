@@ -1,4 +1,5 @@
-﻿using DesafioDev.MVC.Models;
+﻿using DesafioDev.MVC.Interfaces;
+using DesafioDev.MVC.Models;
 using System;
 using System.Net.Http.Headers;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text.Json;
 
 namespace DesafioDev.MVC.Services
 {
-    public class HomeService
+    public class HomeService : IHomeService
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiBaseUrl;

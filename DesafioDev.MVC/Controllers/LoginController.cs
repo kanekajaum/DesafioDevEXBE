@@ -1,4 +1,5 @@
-﻿using DesafioDev.MVC.Models;
+﻿using DesafioDev.MVC.Interfaces;
+using DesafioDev.MVC.Models;
 using DesafioDev.MVC.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,9 @@ namespace DesafioDev.MVC.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public LoginController(AuthService authService)
+        public LoginController(IAuthService authService)
         {
             _authService = authService;
         }

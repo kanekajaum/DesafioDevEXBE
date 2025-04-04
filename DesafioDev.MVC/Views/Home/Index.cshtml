@@ -39,7 +39,7 @@
                         <p class="card-text">
                             @if (isAuthenticated)
                             {
-                                <a asp-action="Time" asp-route-id="@jogo.HomeTeam.Id">
+                                <a href="#" class="open-time-modal" data-id="@jogo.HomeTeam.Id">
                                     <img src="@jogo.HomeTeam.Crest" alt="Escudo @jogo.HomeTeam.ShortName" class="img-fluid" style="max-height: 50px;">
                                 </a>
                             }
@@ -52,7 +52,7 @@
 
                             @if (isAuthenticated)
                             {
-                                <a asp-action="Time" asp-route-id="@jogo.AwayTeam.Id">
+                                <a href="#" class="open-time-modal" data-id="@jogo.AwayTeam.Id">
                                     <img src="@jogo.AwayTeam.Crest" alt="Escudo @jogo.AwayTeam.ShortName" class="img-fluid" style="max-height: 50px;">
                                 </a>
                             }

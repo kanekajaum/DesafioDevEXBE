@@ -1,9 +1,10 @@
+using DesafioDev.MVC.Interfaces;
 using DesafioDev.MVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient<AuthService>();
-builder.Services.AddHttpClient<HomeService>();
+builder.Services.AddHttpClient<IAuthService, AuthService>();
+builder.Services.AddHttpClient<IHomeService, HomeService>();
 
 builder.Services.AddDistributedMemoryCache(); 
 builder.Services.AddSession(options =>

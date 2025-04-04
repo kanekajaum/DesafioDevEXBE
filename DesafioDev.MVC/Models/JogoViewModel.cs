@@ -1,6 +1,4 @@
-﻿using DesafioDev.MVC.Models;
-
-namespace DesafioDev.MVC
+﻿namespace DesafioDev.MVC.Models
 {
     public class JogoViewModel
     {

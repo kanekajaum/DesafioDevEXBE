@@ -1,18 +1,39 @@
-﻿document.getElementById("timesSelect").addEventListener("change", function () {
-    var timeId = this.value;
+﻿$(document).ready(function () {
+    $(".open-time-modal").click(function (e) {
+        e.preventDefault();
+        var timeId = $(this).data("id");
 
-    if (timeId && timeId !== "0") {
-        var form = document.createElement("form");
-        form.method = "POST";
-        form.action = "/Home/Time";
+        $.ajax({
+            url: "/Home/Time/" + timeId,
+            type: "GET",
+            success: function (data) {
+                $("#timeDetails").html("<p>Carregando...</p>");
+                $("#timeDetails").html(data);
+                $("#timeModal").modal("show");
+            },
+            error: function () {
+                $("#timeDetails").html("<p>Erro ao carregar os detalhes do time.</p>");
+            }
+        });
+    });
 
-        var input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "id";
-        input.value = timeId;
+    document.getElementById("timesSelect").addEventListener("change", function () {
+        var timeId = this.value;
 
-        form.appendChild(input);
-        document.body.appendChild(form);
-        form.submit();
-    }
+        if (timeId && timeId !== "0") {
+            $("#timeDetails").html("<p>Carregando...</p>");
+
+            $.ajax({
+                url: "/Home/Time/" + timeId,
+                type: "GET",
+                success: function (data) {
+                    $("#timeDetails").html(data);
+                    $("#timeModal").modal("show");
+                },
+                error: function () {
+                    $("#timeDetails").html("<p>Erro ao carregar os detalhes do time.</p>");
+                }
+            });
+        }
+    });
 });

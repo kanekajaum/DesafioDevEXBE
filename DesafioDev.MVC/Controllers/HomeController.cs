@@ -1,4 +1,5 @@
-﻿using DesafioDev.MVC.Models;
+﻿using DesafioDev.MVC.Interfaces;
+using DesafioDev.MVC.Models;
 using DesafioDev.MVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -12,11 +13,11 @@ namespace DesafioDev.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HomeService _homeService;
+        private readonly IHomeService _homeService;
         private readonly HttpClient _httpClient;
         private readonly string _apiBaseUrl;
 
-        public HomeController(HomeService homeService, HttpClient httpClient, IConfiguration configuration)
+        public HomeController(IHomeService homeService, HttpClient httpClient, IConfiguration configuration)
         {
             _homeService = homeService;
             _httpClient = httpClient;
@@ -106,7 +107,7 @@ namespace DesafioDev.MVC.Controllers
             var token = HttpContext.Session.GetString("AuthToken");
             var time = await _homeService.BuscarTimeEPartidas(id, token);
 
-            return View(time);
+            return PartialView("_TimeDetails", time);
         }
 
         public IActionResult Registrar()

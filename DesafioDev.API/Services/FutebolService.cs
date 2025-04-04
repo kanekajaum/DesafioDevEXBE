@@ -1,4 +1,5 @@
-﻿using DesafioDev.API.Models;
+﻿using DesafioDev.API.Interfaces;
+using DesafioDev.API.Models;
 using Microsoft.Extensions.FileSystemGlobbing;
 using System.Diagnostics.Contracts;
 using System.Text.Json;
@@ -6,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace DesafioDev.API.Services
 {
-    public class FutebolService
+    public class FutebolService : IFutebolService
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;

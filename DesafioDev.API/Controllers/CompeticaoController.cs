@@ -1,4 +1,5 @@
-﻿using DesafioDev.API.Models;
+﻿using DesafioDev.API.Interfaces;
+using DesafioDev.API.Models;
 using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,9 @@ namespace DesafioDev.API.Controllers
     [Route("api/[controller]")]
     public class CompeticaoController : ControllerBase
     {
-        private readonly CompeticaoService _competicaoService;
+        private readonly ICompeticaoService _competicaoService;
 
-        public CompeticaoController(CompeticaoService competicaoService)
+        public CompeticaoController(ICompeticaoService competicaoService)
         {
             _competicaoService = competicaoService;
         }

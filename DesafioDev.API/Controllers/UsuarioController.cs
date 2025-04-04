@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using DesafioDev.API.Contexto;
+using DesafioDev.API.Interfaces;
 using DesafioDev.API.Models;
 using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,10 @@ namespace DesafioDev.API.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly UsuarioService _usuarioService;
-        private readonly TokenService _tokenService;
+        private readonly IUsuarioService _usuarioService;
+        private readonly ITokenService _tokenService;
 
-        public UsuarioController(ApplicationDbContext context, UsuarioService usuarioService, TokenService tokenService)
+        public UsuarioController(ApplicationDbContext context, IUsuarioService usuarioService, ITokenService tokenService)
         {
             _context = context;
             _usuarioService = usuarioService;

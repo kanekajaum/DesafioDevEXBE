@@ -1,4 +1,5 @@
 ﻿using DesafioDev.API.Contexto;
+using DesafioDev.API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
@@ -7,10 +8,10 @@ using System.Text;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly TokenService _tokenService;
+    private readonly ITokenService _tokenService;
     private readonly ApplicationDbContext _context;
 
-    public AuthController(TokenService tokenService, ApplicationDbContext context)
+    public AuthController(ITokenService tokenService, ApplicationDbContext context)
     {
         _context = context;
         _tokenService = tokenService;

@@ -1,4 +1,5 @@
-﻿using DesafioDev.API.Services;
+﻿using DesafioDev.API.Interfaces;
+using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,9 @@ namespace DesafioDev.API.Controllers
     [Route("api/[controller]")]
     public class FutebolController : ControllerBase
     {
-        private readonly FutebolService _futebolService;
+        private readonly IFutebolService _futebolService;
 
-        public FutebolController(FutebolService futebolService)
+        public FutebolController(IFutebolService futebolService)
         {
             _futebolService = futebolService;
         }

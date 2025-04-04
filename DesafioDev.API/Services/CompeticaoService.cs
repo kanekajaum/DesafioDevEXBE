@@ -1,4 +1,5 @@
-﻿using DesafioDev.API.Models;
+﻿using DesafioDev.API.Interfaces;
+using DesafioDev.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using static DesafioDev.API.Models.TopJogadoresResponse;
@@ -6,7 +7,7 @@ using static DesafioDev.API.Models.TopJogadoresResponse;
 namespace DesafioDev.API.Services
 {
 
-    public class CompeticaoService
+    public class CompeticaoService : ICompeticaoService
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;

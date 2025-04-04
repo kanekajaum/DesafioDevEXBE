@@ -36,13 +36,13 @@
                                 </select>
                             </li>
                             <li class="nav-item mx-3">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#userModal">
                                     Usuário
                                 </button>
                             </li>
                             <li class="nav-item mx-3">
                                 <form asp-controller="Login" asp-action="Logout" method="post">
-                                    <button type="submit" class="btn btn-danger">Sair <i>&#8594;</i></button>
+                                    <button type="submit" class="btn btn-outline-danger">Sair <i>&#8594;</i></button>
                                 </form>
                             </li>
                         }
@@ -60,26 +60,6 @@
             </div>
         </nav>
 
-        <script>
-            document.getElementById("timesSelect").addEventListener("change", function () {
-                var timeId = this.value;
-
-                if (timeId && timeId !== "0") {
-                    var form = document.createElement("form");
-                    form.method = "POST";
-                    form.action = "/Home/Time";
-
-                    var input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = "id";
-                    input.value = timeId;
-
-                    form.appendChild(input);
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
-        </script>
 
     </header>
     <div class="container">

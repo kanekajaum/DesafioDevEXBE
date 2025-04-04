@@ -1,4 +1,18 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿document.getElementById("timesSelect").addEventListener("change", function () {
+    var timeId = this.value;
 
-// Write your JavaScript code.
+    if (timeId && timeId !== "0") {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/Home/Time";
+
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "id";
+        input.value = timeId;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+});

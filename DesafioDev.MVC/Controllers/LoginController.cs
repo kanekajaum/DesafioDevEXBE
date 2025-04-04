@@ -54,7 +54,8 @@ namespace DesafioDev.MVC.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("AuthToken");
-            return RedirectToAction("Login", "Home");
+            HttpContext.Session.Remove("EmailToken");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

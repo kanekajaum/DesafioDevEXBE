@@ -4,12 +4,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.API", "DesafioDev.API\DesafioDev.API.csproj", "{FECAC534-9830-4F4A-92CF-70E8DE1C74B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{149199F7-E67E-4D8A-8E00-88896891F923} = {149199F7-E67E-4D8A-8E00-88896891F923}
+		{72E23618-98CC-4A34-BFB5-E6F1CB7A772D} = {72E23618-98CC-4A34-BFB5-E6F1CB7A772D}
+		{AA03E612-472C-49BF-969C-D628B746A5B9} = {AA03E612-472C-49BF-969C-D628B746A5B9}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.Application", "DesafioDev.Application\DesafioDev.Application.csproj", "{149199F7-E67E-4D8A-8E00-88896891F923}"
+	ProjectSection(ProjectDependencies) = postProject
+		{72E23618-98CC-4A34-BFB5-E6F1CB7A772D} = {72E23618-98CC-4A34-BFB5-E6F1CB7A772D}
+		{AA03E612-472C-49BF-969C-D628B746A5B9} = {AA03E612-472C-49BF-969C-D628B746A5B9}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.Tests", "DesafioDev.Tests\DesafioDev.Tests.csproj", "{B07D13F1-3E6B-462D-AEA0-BF00B22AFA63}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDev.MVC", "DesafioDev.MVC\DesafioDev.MVC.csproj", "{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{149199F7-E67E-4D8A-8E00-88896891F923} = {149199F7-E67E-4D8A-8E00-88896891F923}
+		{AA03E612-472C-49BF-969C-D628B746A5B9} = {AA03E612-472C-49BF-969C-D628B746A5B9}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDev.Domainn", "DesafioDev.Domainn\DesafioDev.Domainn.csproj", "{AA03E612-472C-49BF-969C-D628B746A5B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDev.Infrastructuree", "DesafioDev.Infrastructuree\DesafioDev.Infrastructuree.csproj", "{72E23618-98CC-4A34-BFB5-E6F1CB7A772D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA03E612-472C-49BF-969C-D628B746A5B9} = {AA03E612-472C-49BF-969C-D628B746A5B9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +53,14 @@ Global
 		{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27E06937-2809-4BB9-9B9F-4D8BF707F3CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA03E612-472C-49BF-969C-D628B746A5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA03E612-472C-49BF-969C-D628B746A5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA03E612-472C-49BF-969C-D628B746A5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA03E612-472C-49BF-969C-D628B746A5B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E23618-98CC-4A34-BFB5-E6F1CB7A772D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E23618-98CC-4A34-BFB5-E6F1CB7A772D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E23618-98CC-4A34-BFB5-E6F1CB7A772D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E23618-98CC-4A34-BFB5-E6F1CB7A772D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

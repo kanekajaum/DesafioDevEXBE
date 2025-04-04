@@ -4,7 +4,7 @@
     <h2>@Model.Name</h2>
     <img src="@Model.Crest" alt="@Model.Name" class="img-fluid" width="150">
     <p><strong>Fundado em:</strong> @Model.Founded</p>
-    <p><strong>Endereço:</strong> @Model.Address</p>
+    <p><strong>Endereço:</strong> @(Model.Address?.Replace("null", "").Trim(' ', ','))</p>
     <p><strong>Site:</strong> <a href="@Model.Website" target="_blank">@Model.Website</a></p>
 
     <h3>Treinador</h3>
@@ -23,10 +23,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var match in Model.JogosRecentes)
+                @foreach (var match in Model.JogosRecentes.Take(10))
                 {
                     <tr>
-                        <td>@match.UtcDate</td>
+                        <td>@DateTime.Parse(match.UtcDate).ToString("dd/MM/yyyy")</td>
                         <td>@match.HomeTeam.ShortName</td>
                         <td>@match.AwayTeam.ShortName</td>
                         <td>@(match.Score.FullTime.Home ?? 0) - @(match.Score.FullTime.Away ?? 0)</td>

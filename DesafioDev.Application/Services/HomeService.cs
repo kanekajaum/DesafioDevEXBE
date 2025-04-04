@@ -1,6 +1,6 @@
 ﻿using DesafioDev.MVC.Interfaces;
 using DesafioDev.MVC.Models;
-using System;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;

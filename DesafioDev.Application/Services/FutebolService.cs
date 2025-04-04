@@ -1,9 +1,7 @@
 ﻿using DesafioDev.API.Interfaces;
 using DesafioDev.API.Models;
-using Microsoft.Extensions.FileSystemGlobbing;
-using System.Diagnostics.Contracts;
+using Microsoft.Extensions.Configuration;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace DesafioDev.API.Services
 {

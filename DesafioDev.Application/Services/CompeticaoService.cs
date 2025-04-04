@@ -1,7 +1,7 @@
-﻿using DesafioDev.API.Interfaces;
+﻿using System.Text.Json;
+using DesafioDev.API.Interfaces;
 using DesafioDev.API.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 using static DesafioDev.API.Models.TopJogadoresResponse;
 
 namespace DesafioDev.API.Services

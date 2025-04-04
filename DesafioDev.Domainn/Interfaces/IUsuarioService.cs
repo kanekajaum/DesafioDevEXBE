@@ -1,5 +1,4 @@
 ﻿using DesafioDev.API.Models;
-using Microsoft.AspNetCore.Mvc;
 
 public interface IUsuarioService
 {

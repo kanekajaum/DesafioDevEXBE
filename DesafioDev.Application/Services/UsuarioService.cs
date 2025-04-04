@@ -1,10 +1,7 @@
 ﻿using DesafioDev.API.Contexto;
-using DesafioDev.API.Contexto.DesafioDev.API.UoW;
 using DesafioDev.API.Interfaces.DesafioDev.API.UoW;
 using DesafioDev.API.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace DesafioDev.API.Services
 {

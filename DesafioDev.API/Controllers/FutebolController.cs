@@ -14,6 +14,10 @@ namespace DesafioDev.API.Controllers
             _futebolService = futebolService;
         }
 
+        /// <summary>
+        /// Lista os times em geral
+        /// </summary>
+        /// <returns>Lista de Times</returns>
         [HttpGet("/Times")]
         public async Task<IActionResult> ObterTimes()
         {
@@ -24,6 +28,11 @@ namespace DesafioDev.API.Controllers
             }
             return Ok(times);
         }
+
+        /// <summary>
+        /// busca um time
+        /// </summary>
+        /// <returns>Buscar Time</returns>
 
         [Authorize]
         [HttpPost("/Times/Id")]
@@ -37,6 +46,10 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        /// <summary>
+        /// Lista todos os times de uma competição especifica
+        /// </summary>
+        /// <returns>Buscar os times de uma competição</returns>
         [Authorize]
         [HttpGet("/TimesDecompeticoes/{competicaoId}/")]
         public async Task<IActionResult> ObterTimesPorCompeticao(int competicaoId)
@@ -51,6 +64,10 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        /// <summary>
+        /// Lista os jogos de um time
+        /// </summary>
+        /// <returns>Buscar os jogos recentes de um Time</returns>
         [Authorize]
         [HttpGet("/TimesJogosRecentes/{timeId}/")]
         public async Task<IActionResult> TimesJogosRecentes(int timeId)
@@ -65,6 +82,10 @@ namespace DesafioDev.API.Controllers
             return Ok(times);
         }
 
+        /// <summary>
+        /// Lista as areas por paises
+        /// </summary>
+        /// <returns>Buscar as areas de competições por paises</returns>
         [Authorize]
         [HttpGet("/Areas")]
         public async Task<IActionResult> ObterAreas()

@@ -18,6 +18,10 @@ public class AuthController : ControllerBase
         _tokenService = tokenService;
     }
 
+    /// <summary>
+    /// Valida os usuários cadastrados e devolve o token.
+    /// </summary>
+    /// <returns>Valida usuários</returns>
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {

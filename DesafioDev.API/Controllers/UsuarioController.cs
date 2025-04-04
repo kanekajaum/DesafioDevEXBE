@@ -22,6 +22,10 @@ namespace DesafioDev.API.Controllers
             _tokenService = tokenService;
         }
 
+        /// <summary>
+        /// Cadastrar usuarios
+        /// </summary>
+        /// <returns>Cadastro de usuarios</returns>
         [HttpPost("cadastrar")]
         public async Task<IActionResult> CadastrarUsuario([FromBody] Usuario usuario)
         {
@@ -35,6 +39,10 @@ namespace DesafioDev.API.Controllers
             return CreatedAtAction(nameof(CadastrarUsuario), new { id = usuario.Id }, usuario);
         }
 
+        /// <summary>
+        /// Lista de usuarios
+        /// </summary>
+        /// <returns>Lista de usuarios</returns>
         [HttpGet]
         public async Task<ActionResult<List<Usuario>>> ListarUsuarios()
         {
@@ -48,6 +56,10 @@ namespace DesafioDev.API.Controllers
             return Ok(usuarios);
         }
 
+        /// <summary>
+        /// Valida token
+        /// </summary>
+        /// <returns>Valida token de usuarios</returns>
         [HttpPost("validarLogin")]
         public async Task<IActionResult> ValidarLogin(string email, string senha)
         {

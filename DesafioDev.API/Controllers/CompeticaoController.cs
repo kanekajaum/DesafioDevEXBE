@@ -16,6 +16,10 @@ namespace DesafioDev.API.Controllers
             _competicaoService = competicaoService;
         }
 
+        /// <summary>
+        /// Lista todas as competições disponíveis.
+        /// </summary>
+        /// <returns>Lista de Competições</returns>
         [Authorize]
         [HttpGet]
         [Route("/ObterCompeticoes")]
@@ -31,6 +35,10 @@ namespace DesafioDev.API.Controllers
             return Ok(competicoes);
         }
 
+        /// <summary>
+        /// Lista todas as áreas de competições disponíveis.
+        /// </summary>
+        /// <returns>Lista de áreas</returns>
         [Authorize]
         [HttpPost]
         [Route("/PorArea/{areaId}")]
@@ -46,6 +54,10 @@ namespace DesafioDev.API.Controllers
             return Ok(competicoes);
         }
 
+        /// <summary>
+        /// Lista todas as jogos do dia.
+        /// </summary>
+        /// <returns>Lista de jogos do dia</returns>
         [HttpGet]
         [Route("/ObterJogosDeHoje")]
         public async Task<IActionResult> ObterJogosDeHoje()
@@ -61,6 +73,10 @@ namespace DesafioDev.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Lista todos os jogos da Champions League.
+        /// </summary>
+        /// <returns>Lista de jogos da Champions League</returns>
         [HttpGet]
         [Route("/ObterJogosChampionsLeague")]
         public async Task<IActionResult> ObterJogosChampionsLeague()
@@ -76,6 +92,10 @@ namespace DesafioDev.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Lista todos os jogos do brasileirão.
+        /// </summary>
+        /// <returns>Lista de jogos do brasileirão</returns>
         [HttpGet]
         [Route("/ObterJogosBrasileirao")]
         public async Task<IActionResult> ObterJogosBrasileirao()
@@ -91,6 +111,10 @@ namespace DesafioDev.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Top 10 artilheiros do brasil.
+        /// </summary>
+        /// <returns>Lista de jogadores com mais gols no brasileirão</returns>
         [HttpGet]
         [Route("/ObterTopJogadoresBrasileirao")]
         public async Task<IActionResult> ObterTopJogadoresBrasileirao()

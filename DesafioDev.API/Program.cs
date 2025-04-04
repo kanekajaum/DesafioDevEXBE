@@ -1,5 +1,7 @@
 using DesafioDev.API.Contexto;
+using DesafioDev.API.Contexto.DesafioDev.API.UoW;
 using DesafioDev.API.Interfaces;
+using DesafioDev.API.Interfaces.DesafioDev.API.UoW;
 using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +42,7 @@ builder.Services.AddControllers();
 builder.Services.AddHttpClient<IFutebolService, FutebolService>();
 builder.Services.AddHttpClient<ICompeticaoService, CompeticaoService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddEndpointsApiExplorer();
 

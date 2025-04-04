@@ -33,10 +33,7 @@ namespace DesafioDev.API.Controllers
                 return BadRequest("E-mail já cadastrado.");
             }
 
-            usuario.SenhaHash = PasswordService.HashSenha(usuario.SenhaHash);
-
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
+            await _usuarioService.SalvarNovoUsuario(usuario);
 
             return CreatedAtAction(nameof(CadastrarUsuario), new { id = usuario.Id }, usuario);
         }

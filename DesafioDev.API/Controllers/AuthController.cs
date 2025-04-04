@@ -1,5 +1,6 @@
 ﻿using DesafioDev.API.Contexto;
 using DesafioDev.API.Interfaces;
+using DesafioDev.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
@@ -47,10 +48,4 @@ public class AuthController : ControllerBase
             return Convert.ToBase64String(bytes);
         }
     }
-}
-
-public class LoginRequest
-{
-    public string Username { get; set; }
-    public string Password { get; set; }
 }

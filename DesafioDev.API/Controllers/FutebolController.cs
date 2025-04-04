@@ -1,5 +1,4 @@
 ﻿using DesafioDev.API.Interfaces;
-using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,10 +1,7 @@
-﻿using Azure.Core;
-using DesafioDev.API.Contexto;
+﻿using DesafioDev.API.Contexto;
 using DesafioDev.API.Interfaces;
 using DesafioDev.API.Models;
-using DesafioDev.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -28,7 +25,7 @@ namespace DesafioDev.API.Controllers
         [HttpPost("cadastrar")]
         public async Task<IActionResult> CadastrarUsuario([FromBody] Usuario usuario)
         {
-            if (_context.Usuarios.Any(u => u.Email == usuario.Email))
+            if (_usuarioService.ValidarEmail(usuario))
             {
                 return BadRequest("E-mail já cadastrado.");
             }
@@ -54,7 +51,7 @@ namespace DesafioDev.API.Controllers
         [HttpPost("validarLogin")]
         public async Task<IActionResult> ValidarLogin(string email, string senha)
         {
-            var usuarioLogin = _context.Usuarios.SingleOrDefault(u => u.Email == email);
+            var usuarioLogin = _usuarioService.BuscarUsuarioPorEmail(email);
 
             if (usuarioLogin == null)
             {
@@ -71,6 +68,7 @@ namespace DesafioDev.API.Controllers
             var token = _tokenService.GenerateToken(usuarioLogin.SenhaHash);
             return Ok(new { Token = token });
         }
+
 
         public static string HashSenhaSHA256(string senha)
         {

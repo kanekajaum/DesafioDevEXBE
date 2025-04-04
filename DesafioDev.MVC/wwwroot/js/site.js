@@ -37,3 +37,17 @@
         }
     });
 });
+
+function validarSenhas() {
+    const senha = document.getElementById("password").value;
+    const confirmarSenha = document.getElementById("confirmPassword").value;
+    const erro = document.getElementById("senhaErro");
+
+    if (senha !== confirmarSenha) {
+        erro.style.display = "block";
+        return false;
+    }
+
+    erro.style.display = "none";
+    return true;
+}

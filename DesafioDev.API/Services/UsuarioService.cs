@@ -19,6 +19,11 @@ namespace DesafioDev.API.Services
             _unitOfWork = unitOfWork;
         }
 
+        public Usuario? BuscarUsuarioPorEmail(string email)
+        {
+            return _context.Usuarios.SingleOrDefault(u => u.Email == email);
+        }
+
         public async Task<List<Usuario>> ListarUsuariosAsync()
         {
             try
@@ -44,6 +49,11 @@ namespace DesafioDev.API.Services
             {
                 throw;
             }
+        }
+
+        public bool ValidarEmail(Usuario usuario)
+        {
+            return _context.Usuarios.Any(u => u.Email == usuario.Email);
         }
     }
 }

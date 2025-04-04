@@ -26,7 +26,7 @@
                 @foreach (var match in Model.JogosRecentes)
                 {
                     <tr>
-                        <td>@match.UtcDate.ToLocalTime().ToString("dd/MM/yyyy")</td>
+                        <td>@match.UtcDate</td>
                         <td>@match.HomeTeam.ShortName</td>
                         <td>@match.AwayTeam.ShortName</td>
                         <td>@(match.Score.FullTime.Home ?? 0) - @(match.Score.FullTime.Away ?? 0)</td>
